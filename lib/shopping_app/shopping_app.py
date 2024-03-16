@@ -2,62 +2,63 @@ from customer import Customer
 from item import Item
 from seller import Seller
 
-seller = Seller("DICストア")
+seller = Seller("DIC Store")
 for i in range(10):
     Item("CPU", 40830, seller)
-    Item("メモリー", 13880, seller)
-    Item("マザーボード", 28980, seller)
-    Item("電源ユニット", 8980, seller)
-    Item("PCケース", 8727, seller)
-    Item("3.5インチHDD", 10980, seller)
-    Item("2.5インチSSD", 13370, seller)
+    Item("Memory", 13880, seller)
+    Item("Motherboard", 28980, seller)
+    Item("Power supply unit", 8980, seller)
+    Item("PC case", 8727, seller)
+    Item("3.5 inch HDD", 10980, seller)
+    Item("2.5 inch SSD", 13370, seller)
     Item("M.2 SSD", 12980, seller)
-    Item("CPUクーラー", 13400, seller)
-    Item("グラフィックボード", 23800, seller)
+    Item("CPU cooler", 13400, seller)
+    Item("Graphic board", 23800, seller)
 
-print("🤖 あなたの名前を教えてください")
+print("🤖 Please tell me your name")
 customer = Customer(input())
 
-print("🏧 ウォレットにチャージする金額を入力にしてください")
+print("🏧 Please enter the amount to charge to your wallet")
 customer.wallet.deposit(int(input()))
 
-print("🛍️ ショッピングを開始します")
+print("🛍️ Start shopping")
 end_shopping = False
 while not end_shopping:
-    print("📜 商品リスト")
+    print("📜Product List")
     seller.show_items()
 
-    print("️️⛏ 商品番号を入力してください")
+    print("️️⛏ Please enter the product number")
     number = int(input())
 
-    print("⛏ 商品数量を入力してください")
+    print("⛏ Please enter the product quantity")
     quantity = int(input())
 
     items = seller.pick_items(number, quantity)
     for item in items:
         customer.cart.add(item)
-    print("🛒 カートの中身")
+    print("🛒 Cart contents")
     customer.cart.show_items()
-    print(f"🤑 合計金額: {customer.cart.total_amount()}")
+    print(f"🤑 Total amount: {customer.cart.total_amount()}")
 
-    print("😭 買い物を終了しますか？(yes/no)")
+    print("😭 Do you want to finish shopping? (yes/no)")
     end_shopping = input() == "yes"
 
-print("💸 購入を確定しますか？(yes/no)")
+print("💸 Do you want to confirm the purchase? (yes/no)")
 if input() == "yes":
+    seller.wallet.deposit(customer.cart.total_amount())
     customer.cart.check_out()
 
-print("୨୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈結果┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨୧")
-print(f"️🛍️ ️{customer.name}の所有物")
+print("୨୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈Result┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨୧")
+print(f"️🛍️ ️Property of {customer.name}")
 customer.show_items()
-print(f"😱👛 {customer.name}のウォレット残高: {customer.wallet.balance}")
+print(f"😱👛 {customer.name}'s wallet balance: {customer.wallet.balance}")
 
-print(f"📦 {seller.name}の在庫状況")
+print(f"📦 Inventory status of {seller.name}")
 seller.show_items()
-print(f"😻👛 {seller.name}のウォレット残高: {seller.wallet.balance}")
+print(f"😻👛 {seller.name}'s wallet balance: {seller.wallet.balance}")
 
-print("🛒 カートの中身")
+print("🛒 Cart contents")
 customer.cart.show_items()
-print(f"🌚 合計金額: {customer.cart.total_amount()}")
+print(f"🌚 Total amount: {customer.cart.total_amount()}")
 
-print("🎉 終了")
+print("🎉 Finished")
